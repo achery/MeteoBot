@@ -28,7 +28,7 @@ Meteobot est un bot Python qui récupère les données météo actuelles et les 
 
 1. Clonez ce dépôt :
    ```bash
-   git clone https://github.com/<votre-utilisateur>/meteobot.git
+   git clone https://github.com/achery/meteobot.git
    cd meteobot
    ```
 
@@ -127,7 +127,7 @@ Vent : 15 km/h
 
 ## Contributions
 
-Les contributions sont les bienvenues ! Si vous souhaitez ajouter des fonctionnalités ou corriger un bug, ouvrez une [issue](https://github.com/<votre-utilisateur>/meteobot/issues) ou soumettez une pull request.
+Les contributions sont les bienvenues ! Si vous souhaitez ajouter des fonctionnalités ou corriger un bug, ouvrez une [issue](https://github.com/achery/meteobot/issues) ou soumettez une pull request.
 
 ## Licence
 
