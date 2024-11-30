@@ -26,6 +26,7 @@ def get_weather(city, api_key):
         response.raise_for_status()
         data = response.json()
         temp = data['main']['temp']
+        feels_like = data['main']['feels_like']
         description = data['weather'][0]['description']
         humidity = data['main']['humidity']
         wind_speed = data['wind']['speed'] * 3.6  # Conversion en km/h
@@ -35,7 +36,7 @@ def get_weather(city, api_key):
         elif "neige" in description:
             alert = "\n❄️ *Attention à la neige !*"
         return (f"🌤️ *Météo actuelle à {city}*\n"
-                f"Température : *{temp}°C*\n"
+                f"Température : *{temp}°C* (Ressenti : *{feels_like:.1f}°C*)\n"
                 f"Description : *{description.capitalize()}*\n"
                 f"Humidité : *{humidity}%*\n"
                 f"Vent : *{wind_speed:.1f} km/h*{alert}")
@@ -55,13 +56,18 @@ def get_forecast(city, api_key):
             date, time = item['dt_txt'].split(" ")
             if time in selected_hours:  # Filtrer par les heures spécifiques
                 temp = item['main']['temp']
+                feels_like = item['main']['feels_like']
                 description = item['weather'][0]['description']
                 humidity = item['main']['humidity']
                 wind_speed = item['wind']['speed'] * 3.6  # Conversion en km/h
                 emoji = get_emoji(description)
                 if date not in forecasts:
                     forecasts[date] = {}
-                forecasts[date][time] = f"{emoji} {temp}°C\n{description.capitalize()}\nHumidité : {humidity}%\nVent : {wind_speed:.1f} km/h"
+                forecasts[date][time] = (
+                    f"{emoji} {temp}°C (Ressenti : {feels_like:.1f}°C)\n"
+                    f"{description.capitalize()}\n"
+                    f"Humidité : {humidity}%, Vent : {wind_speed:.1f} km/h"
+                )
         return forecasts
     except requests.RequestException as e:
         print(f"Erreur : Impossible de récupérer les prévisions météo ({e}).")
