@@ -138,6 +138,15 @@ if __name__ == "__main__":
                 "text": f"*📅 {readable_date}*"
             }
         })
+        # Ajouter les détails horaires
+        for time, forecast in times.items():
+            blocks.append({
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": f"*{time}*\n{forecast}"
+                }
+            })
         blocks.append({"type": "divider"})
 
     # Poster sur Slack
