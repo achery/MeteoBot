@@ -61,7 +61,7 @@ def get_forecast(city, api_key):
                 emoji = get_emoji(description)
                 if date not in forecasts:
                     forecasts[date] = {}
-                forecasts[date][time] = f"{emoji} {temp}°C, {description.capitalize()}\nHumidité : {humidity}%, Vent : {wind_speed:.1f} km/h"
+                forecasts[date][time] = f"{emoji} {temp}°C\n{description.capitalize()}\nHumidité : {humidity}%\nVent : {wind_speed:.1f} km/h"
         return forecasts
     except requests.RequestException as e:
         print(f"Erreur : Impossible de récupérer les prévisions météo ({e}).")
@@ -138,15 +138,27 @@ if __name__ == "__main__":
                 "text": f"*📅 {readable_date}*"
             }
         })
-        # Ajouter les détails horaires
-        for time, forecast in times.items():
-            blocks.append({
-                "type": "section",
-                "text": {
+        blocks.append({
+            "type": "section",
+            "fields": [
+                {
                     "type": "mrkdwn",
-                    "text": f"*{time}*\n{forecast}"
+                    "text": f"*06:00*\n{times.get('06:00:00', 'N/A')}"
+                },
+                {
+                    "type": "mrkdwn",
+                    "text": f"*09:00*\n{times.get('09:00:00', 'N/A')}"
+                },
+                {
+                    "type": "mrkdwn",
+                    "text": f"*12:00*\n{times.get('12:00:00', 'N/A')}"
+                },
+                {
+                    "type": "mrkdwn",
+                    "text": f"*15:00*\n{times.get('15:00:00', 'N/A')}"
                 }
-            })
+            ]
+        })
         blocks.append({"type": "divider"})
 
     # Poster sur Slack
